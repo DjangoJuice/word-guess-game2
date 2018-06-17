@@ -2,8 +2,12 @@
 var arrayOfCountries = ["America", "Canada", "Scotland", "Ireland", "Italy", "France", "Russia", "China", "Japan", "England", "Mexico", "Venezuela", "Argentina"];
 
 
+//Letters Array
+var validLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+
 //Pick a random country for the player to guess. Guessing this correct is the objective of the game.
-var randomCountry = arrayOfCountries[Math.floor(Math.random() * arrayOfCountries.length)];
+var randomCountry = arrayOfCountries[Math.floor(Math.random() * arrayOfCountries.length)].toLocaleLowerCase();
     console.log("Random Country: " + randomCountry);
     console.log("Random Country split : " + randomCountry.split(""));
 
@@ -13,7 +17,7 @@ var countryLengthArray = [];
 for (var y = 0, dude = randomCountry.length; y < dude; y++) {
     countryLengthArray.push(randomCountry[y])
   };
-    console.log("countryLengtharry"+ countryLengthArray);
+    console.log("countryLengtharry: "+ countryLengthArray);
 
 
 //Display the dashes that represent the letters of the country being guessed
@@ -48,21 +52,39 @@ document.onkeyup = function(event) {
 
 
     //User's guess variable
-    var userGuess = event.key;
+    var userGuess = event.key.toLocaleLowerCase();
+
+    //Letter Validator - prevents player from guessing anything else
+    if (validLetters.indexOf(userGuess) === -1) {
+        alert("Only Choose Letters")
+    }
+    else (playerGuessFilter(userGuess))
         console.log("UserGuess: " + userGuess);
 
-/*
+    /*
+    function nonLettersShallNotPAss(letter) {
+        var letterChoice = userGuess !== userGuess;
+        validLetters.forEach(userGuess); {
+            if (event.key.toLocaleLowerCase() === "i") {
+                
+            }
+        }   
+    }
+    
     //Function to store the letters being guessed
     function addPreviousGuesses(banana) {
         if (previouslyGuessedLetter.indexof(banana) === -1)
         previouslyGuessedLetter.push(banana);
       }
-*/
+    */
 
     //Each unique guess should be added to the list of previously guessed letters
-    if (previouslyGuessedLetter.indexOf(userGuess) === -1) {
-        previouslyGuessedLetter.push(userGuess);
-    }
+    function playerGuessFilter (doug) {
+    if (previouslyGuessedLetter.indexOf(doug) === -1) {
+        previouslyGuessedLetter.push(doug);
+        //Deduct incorrect guesses from the guessing allowence
+        remainingGuessesTotal--;
+    }}
         console.log("Letters guessed: " + previouslyGuessedLetter);
     
 
@@ -73,18 +95,33 @@ document.onkeyup = function(event) {
             document.getElementById('currentWord').innerHTML = dashesArray;
                 console.log("Dynamic Array: " + dashesArray)
         }
-    }
+    };
         
+    //Display each incorrect guess to the user
+    document.getElementById('previouslyGuessedDiv').innerHTML = previouslyGuessedLetter;
+
+    
+    //Display number of guesses left
+    document.getElementById('remainingGuessesDiv').innerHTML = remainingGuessesTotal;
+
 
     //Check to see if the player has won
+    var arrayRandomCountry = randomCountry.split("");
+    if (arrayRandomCountry.length === dashesArray.length && arrayRandomCountry.every(function(m,n) {return m === dashesArray[n]})) {
+        alert("Winner!")
+    };
+
 
     //If the player has won, do something to end the game & send an alert
 
-    //Deduct incorrect guesses from the guessing allowence
-
     //Check to see if the user has exceeded the guessing allowence
-
+    if (remainingGuessesTotal === 0) {
+        alert("Lose. No more guesses");
+    };
+    
     //If the player has lost, end the game & send the them an alert 
+
+
 console.log("-----------------------")
 };//End of document.onkeyup = function(event)
 
