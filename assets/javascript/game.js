@@ -12,6 +12,12 @@ var randomCountry = arrayOfCountries[Math.floor(Math.random() * arrayOfCountries
     console.log("Random Country split : " + randomCountry.split(""));
 
 
+//Function to generate a random Country for the game objective
+function createRandomCountry() {
+    var randomCountry = arrayOfCountries[Math.floor(Math.random() * arrayOfCountries.length)].toLocaleLowerCase();
+}
+
+
 //Measure the length of the array
 var countryLengthArray = [];
 for (var y = 0, dude = randomCountry.length; y < dude; y++) {
@@ -80,7 +86,7 @@ document.onkeyup = function(event) {
 
     //Each unique guess should be added to the list of previously guessed letters
     function playerGuessFilter (doug) {
-    if (previouslyGuessedLetter.indexOf(doug) === -1) {
+    if (previouslyGuessedLetter.indexOf(doug) === -1 && randomCountry.indexOf(doug) === -1) {
         previouslyGuessedLetter.push(doug);
         //Deduct incorrect guesses from the guessing allowence
         remainingGuessesTotal--;
@@ -108,11 +114,19 @@ document.onkeyup = function(event) {
     //Check to see if the player has won
     var arrayRandomCountry = randomCountry.split("");
     if (arrayRandomCountry.length === dashesArray.length && arrayRandomCountry.every(function(m,n) {return m === dashesArray[n]})) {
-        alert("Winner!")
+        currentWinsTotal++;
+        var winStatus = true;
     };
 
 
     //If the player has won, do something to end the game & send an alert
+    //Display the number of wins to the screen
+    document.getElementById('displayWins').innerHTML = currentWinsTotal;
+    if (winStatus = true) {createRandomCountry();};
+    console.log("New random country " + randomCountry);
+    //winStatus = false;
+    console.log("Win Status " + winStatus);
+    console.log("number of wins " + this.currentWinsTotal)
 
     //Check to see if the user has exceeded the guessing allowence
     if (remainingGuessesTotal === 0) {
