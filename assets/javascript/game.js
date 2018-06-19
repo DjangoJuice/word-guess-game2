@@ -6,16 +6,14 @@ var arrayOfCountries = ["America", "Canada", "Scotland", "Ireland", "Italy", "Fr
 var validLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
 
+//Track the total number of wins
+var currentWinsTotal = 0;
+
+
 //Pick a random country for the player to guess. Guessing this correct is the objective of the game.
 var randomCountry = arrayOfCountries[Math.floor(Math.random() * arrayOfCountries.length)].toLocaleLowerCase();
     console.log("Random Country: " + randomCountry);
     console.log("Random Country split : " + randomCountry.split(""));
-
-
-//Function to generate a random Country for the game objective
-function createRandomCountry() {
-    var randomCountry = arrayOfCountries[Math.floor(Math.random() * arrayOfCountries.length)].toLocaleLowerCase();
-}
 
 
 //Measure the length of the array
@@ -41,16 +39,21 @@ var remainingGuessesTotal = 10;
 var previouslyGuessedLetter = [];
 
 
-//Track the previously guessed letters
-//eh
-
-
-//Track the remaining number of guesses
-//eh
-
-
-//Track the total number of wins
-var currentWinsTotal = 0;
+var flagImagesObject = {
+    "america": "./assets/images/flag-america.jpg",
+    "canada": "./assets/images/flag-canada.gif",
+    "scotland": "./assets/images/flag-scotland.png",
+    "ireland": "./assets/images/flag-ireland.jpg",
+    "italy": "./assets/images/flag-italy.png",
+    "france": "./assets/images/flag-france.png",
+    "russia": "./assets/images/flag-russia.png",
+    "china": "./assets/images/flag-china.jpg",
+    "japan": "./assets/images/flag-japan.gif",
+    "england": "./assets/images/flag-england.png",
+    "mexico": "./assets/images/flag-mexico.png",
+    "venezuela": "./assets/images/flag-venezuela.jpg",
+    "argentina": "./assets/images/flag-argentina.jpg"
+}
 
 
 //Event - Listen for the keys being pressed
@@ -116,17 +119,17 @@ document.onkeyup = function(event) {
     if (arrayRandomCountry.length === dashesArray.length && arrayRandomCountry.every(function(m,n) {return m === dashesArray[n]})) {
         currentWinsTotal++;
         var winStatus = true;
+        document.getElementById('flagPicture').src = flagImagesObject["" + randomCountry + ""];
     };
 
 
     //If the player has won, do something to end the game & send an alert
     //Display the number of wins to the screen
     document.getElementById('displayWins').innerHTML = currentWinsTotal;
-    if (winStatus = true) {createRandomCountry();};
     console.log("New random country " + randomCountry);
-    //winStatus = false;
+    console.log("number of wins " + currentWinsTotal);
+    winStatus = false;
     console.log("Win Status " + winStatus);
-    console.log("number of wins " + this.currentWinsTotal)
 
     //Check to see if the user has exceeded the guessing allowence
     if (remainingGuessesTotal === 0) {
